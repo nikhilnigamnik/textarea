@@ -1,8 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Textarea
+
+A lightweight, shareable text editor built with Next.js that stores content directly in the URL hash. Type, share, and collaborate instantly - no backend required.
+
+## Features
+
+- **URL-based Storage**: Content is stored in the URL hash as base64-encoded data, making it instantly shareable
+- **Real-time Updates**: Content automatically syncs to the URL as you type
+- **Performance Optimized**: Uses debounce (500ms) and throttle (100ms) to optimize URL updates
+- **No Backend Required**: Everything works client-side with no database or API calls
+- **Shareable Links**: Copy the URL to share your content with others
+- **Browser History Support**: Navigate through content versions using browser back/forward buttons
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd textarea
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +51,66 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How It Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The editor uses a contentEditable div that:
 
-## Learn More
+- Encodes your content to base64 and stores it in the URL hash
+- Automatically updates the URL after 500ms of inactivity (debounced)
+- Loads content from the URL hash on page load
+- Supports browser navigation (back/forward buttons)
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Start typing in the editor
+2. The URL will automatically update with your content (encoded in the hash)
+3. Copy and share the URL to let others view or edit the same content
+4. Use browser back/forward buttons to navigate through content history
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technology Stack
 
-## Deploy on Vercel
+- **Next.js 16**: React framework with App Router
+- **React 19**: UI library
+- **TypeScript**: Type safety
+- **Tailwind CSS**: Styling
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+textarea/
+├── app/
+│   ├── page.tsx          # Main page component
+│   ├── layout.tsx        # Root layout
+│   └── globals.css       # Global styles
+├── components/
+│   └── editor.tsx        # Editor component with URL hash logic
+└── package.json
+```
+
+## Development
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Start Production Server
+
+```bash
+npm start
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Limitations
+
+- URL length limits: Browsers have URL length limits (typically 2000-8000 characters), so very long content may not fit in the URL hash
+- No persistence: Content is only stored in the URL, so clearing browser history will lose the content
+- No collaboration: Multiple users editing the same URL won't see each other's changes in real-time
