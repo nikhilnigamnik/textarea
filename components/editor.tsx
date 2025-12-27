@@ -84,10 +84,10 @@ export function Editor() {
   };
 
   return (
-    <section className="text-xs h-screen w-full no-scrollbar overflow-y-auto">
+    <section className="text-sm h-screen w-full no-scrollbar overflow-y-auto overflow-x-auto">
       <div
         ref={editorRef}
-        className="max-w-7xl outline-none mx-auto px-4 py-10 h-full no-scrollbar overflow-y-auto"
+        className="max-w-7xl outline-none mx-auto px-4 py-10 h-full no-scrollbar overflow-y-auto overflow-x-auto"
         contentEditable={true}
         onInput={handleInput}
         suppressContentEditableWarning={true}
