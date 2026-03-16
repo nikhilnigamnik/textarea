@@ -73,11 +73,24 @@ export function Editor() {
   }, []);
 
   // Save content to URL hash whenever it changes (debounced and throttled)
+  const isContentEmpty = (html: string) => {
+    const stripped = html.replace(/<br\s*\/?>/gi, "").trim();
+    return stripped.length === 0;
+  };
+
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
     const newContent = e.currentTarget.innerHTML;
 
     // Throttled operation (runs at most once per 100ms)
     throttledOperation();
+
+    if (isContentEmpty(newContent)) {
+      window.history.replaceState(null, "", window.location.pathname);
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      return;
+    }
 
     // Debounced URL update (waits 500ms after user stops typing)
     debouncedUpdateUrl(newContent);
